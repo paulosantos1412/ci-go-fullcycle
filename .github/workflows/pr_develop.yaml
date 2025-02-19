@@ -1,8 +1,5 @@
 name: pr-develop-workflow
-on:
-  pull_request:
-    branches:
-      - develop
+on: [push]
 
 jobs:
   check-application:
@@ -18,3 +15,9 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with: 
+          commit-message: Updating develop with ${GITHUB_REF##*/} 
+          branch: develop
+          title: PR ${GITHUB_REF##*/} -> develop
