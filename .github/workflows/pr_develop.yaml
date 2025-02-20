@@ -25,8 +25,8 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with: 
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Updating develop with ${{ github.head_ref }}
-          branch: ${{ github.head_ref }}  # Nome do seu branch de feature
+          commit-message: Updating develop with ${{ github.ref }}
+          branch: ${{ github.ref }}  # Nome do seu branch de feature
           base: develop  # Branch de destino
-          title: PR ${{ github.head_ref }}  -> develop
+          title: PR ${{ github.ref }}  -> develop
           draft: false
