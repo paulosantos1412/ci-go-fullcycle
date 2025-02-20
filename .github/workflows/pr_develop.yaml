@@ -12,7 +12,7 @@ jobs:
       - run: go test -coverprofile=coverage.out
       - run: go run math.go
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4s
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Create Pull Request
