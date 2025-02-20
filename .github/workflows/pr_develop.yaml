@@ -12,12 +12,14 @@ jobs:
       - run: go test -coverprofile=coverage.out
       - run: go run math.go
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v4s
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Updating develop with ${GITHUB_REF##*/} 
           branch: develop
           title: PR ${GITHUB_REF##*/} -> develop
+          draft: false
