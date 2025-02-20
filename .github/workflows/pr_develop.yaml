@@ -1,12 +1,15 @@
 name: pr-develop-workflow
-on:
-  pull_request:
-    branches:
-      - develop
+on: 
+  push:
+    branches: 
+      - 'feature/**'
 
 jobs:
   check-application:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write    
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -18,3 +21,12 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Updating develop with ${{ github.ref }}
+          branch: ${{ github.ref }}  # Nome do seu branch de feature
+          base: develop  # Branch de destino
+          title: PR ${{ github.ref }}  -> develop
+          draft: false
